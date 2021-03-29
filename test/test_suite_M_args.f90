@@ -64,4 +64,4 @@ implicit none
    call unit_check_done('print_dictionary',msg='')
 end subroutine test_print_dictionary
 !===================================================================================================================================
-program test_suite_M_args
+end program test_suite_M_args
