@@ -3,7 +3,7 @@
 !===================================================================================================================================
 !>
 !!##NAME
-!!    M_args(3fm) - [ARGUMENTS::M_args] - define a NAMELIST in a module template to provide command line argument parsing
+!!    M_args(3fm) - [ARGUMENTS::M_args::INTRO] - define a NAMELIST in a module template to provide command line argument parsing
 !!    (LICENSE:PD)
 !!##SYNOPSIS
 !!
@@ -104,9 +104,9 @@
 !!    Public Domain
 module M_args
 use M_journal, only : journal
-use M_list,          only : insert, locate, replace, remove
+use M_list,    only : insert, locate, replace, remove
 use, intrinsic :: iso_fortran_env, only : stderr=>ERROR_UNIT,stdin=>INPUT_UNIT    ! access computing environment
-use M_strings,       only : isupper, lower, quote, upper
+use M_strings, only : isupper, lower, quote, upper
 private
 !===================================================================================================================================
 public  :: get_command_arguments_stack
@@ -498,7 +498,7 @@ end subroutine get_command_arguments_string
 !!     ! need changed except for possibly the length of HOLD_NAMELIST
 !!     use M_args,    only : get_namelist, print_dictionary, oneline
 !!     !
-!!     integer :: ios, i
+!!     integer :: ios
 !!     character(len=255) :: message ! use for I/O error messages
 !!     character(len=:),allocatable :: readme  ! stores updated namelist
 !!     ! make big enough for all of namelist
