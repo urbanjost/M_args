@@ -11,7 +11,7 @@ keywords = ["fortran", "command line", "arguments"]
 homepage = "https://github.com/urbanjost/M_args.git"
 
 [install]
-library="true"
+library=true
 
 [[test]]
 name="test_suite"
