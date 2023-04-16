@@ -8,7 +8,7 @@
 
       [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
 
-## SAMPLE USAGE
+## Sample Usage
 
    ```fortran
           module M_arguments
@@ -76,7 +76,7 @@
        ./demo_M_args -x 200 -y 123 -l --title 'My title'
    ```
 
-## SUPPORTS FPM ![fpm](docs/images/fpm_logo.gif)
+## Supports FPM ![fpm](docs/images/fpm_logo.gif)
 
    download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
