@@ -206,7 +206,7 @@ iargs=command_argument_count()
       endif
    enddo GET_LONGEST
    allocate(character(len=ilongest) :: args(iargs))
-   args=''
+   args(:)=''
    GET_ARGS: do i=1,command_argument_count()                                             ! copy array of arguments
       call get_command_argument(number=i,value=args(i),length=ilength,status=istatus)    ! get next argument
       if(istatus /= 0) then                                                              ! stop program on error
