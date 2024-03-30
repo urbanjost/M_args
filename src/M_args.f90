@@ -7,16 +7,13 @@
 !!    (LICENSE:PD)
 !!##SYNOPSIS
 !!
-!!
-!!  Usage:
-!!
-!!      use M_args, only : get_namelist, print_dictionary, unnamed
-!!      use M_args, only : get_command_arguments_as_raw_namelist
-!!      use M_args, only : get_command_arguments_stack
-!!      use M_args, only : get_command_arguments_string
-!!      use M_args, only : longest_command_argument
-!!      use M_args, only : debug
-!!      use M_args, only : oneline
+!!    use M_args, only : get_namelist, print_dictionary, unnamed
+!!    use M_args, only : get_command_arguments_as_raw_namelist
+!!    use M_args, only : get_command_arguments_stack
+!!    use M_args, only : get_command_arguments_string
+!!    use M_args, only : longest_command_argument
+!!    use M_args, only : debug
+!!    use M_args, only : oneline
 !!
 !!##DESCRIPTION
 !!    Use the M_arguments(3fp) module template in the following example
@@ -106,7 +103,7 @@
 !!##LICENSE
 !!    Public Domain
 module M_args
-use M_framework__journal, only : journal
+use M_journal, only : journal
 use M_list,    only : insert, locate, replace, remove
 use, intrinsic :: iso_fortran_env, only : stderr=>ERROR_UNIT,stdin=>INPUT_UNIT    ! access computing environment
 use M_strings, only : isupper, lower, quote, upper
@@ -206,7 +203,7 @@ iargs=command_argument_count()
       endif
    enddo GET_LONGEST
    allocate(character(len=ilongest) :: args(iargs))
-   args(:)=''
+   args=''
    GET_ARGS: do i=1,command_argument_count()                                             ! copy array of arguments
       call get_command_argument(number=i,value=args(i),length=ilength,status=istatus)    ! get next argument
       if(istatus /= 0) then                                                              ! stop program on error
@@ -241,7 +238,7 @@ end function get_command_arguments_stack
 !!   Sample usage
 !!
 !!    program demo_get_command_arguments_string
-!!    use M_framework__journal, only : journal
+!!    use M_journal, only : journal
 !!    use M_args, only : get_command_arguments_string
 !!    implicit none
 !!    integer :: ier
@@ -263,7 +260,7 @@ end function get_command_arguments_stack
 !!    Public Domain
 subroutine get_command_arguments_string(string,istatus)
 
-! ident_1="@(#) M_args get_command_arguments_string(3f) return all command arguments as an allocated string"
+! ident_1="@(#)M_args::get_command_arguments_string(3f): return all command arguments as an allocated string"
 
 !  try to guess original quoting and reintroduce quotes
 !-----------------------------------------------------------------------------------------------------------------------------------
@@ -698,7 +695,7 @@ end subroutine get_command_arguments_string
 !!    Public Domain
 function get_namelist(definition,all) result (readme)
 
-! ident_2="@(#) M_args get_namelist(3f) return all command arguments as a NAMELIST(3f) string to read"
+! ident_2="@(#)M_args::get_namelist(3f): return all command arguments as a NAMELIST(3f) string to read"
 
 character(len=*),intent(in),optional :: definition
 logical,intent(in),optional          :: all
@@ -831,7 +828,7 @@ end function get_namelist
 !!    Public Domain
 function get_command_arguments_as_raw_namelist() result (string)
 
-! ident_3="@(#) M_args get_command_arguments_as_raw_namelist(3f) return all command arguments as a NAMELIST(3f) string"
+! ident_3="@(#)M_args::get_command_arguments_as_raw_namelist(3f): return all command arguments as a NAMELIST(3f) string"
 
 character(len=:),allocatable :: string                     ! stores command line argument
 character(len=:),allocatable :: string_bug                 ! bug in gfortran 7.4.0 where string in LHS and RHS causes problems
@@ -889,10 +886,8 @@ integer :: command_line_length
 !!##EXAMPLE
 !!
 !!   sample program:
-!!
-!!    program demo_prototype_to_dictionary
-!!       ! look at some of the values as strings or numbers
-!!    end program demo_prototype_to_dictionary
+!!      ! look at some of the values as strings or numbers
+!!    end program demo_parse
 !!
 !!   Results:
 !!
@@ -903,7 +898,7 @@ integer :: command_line_length
 subroutine prototype_to_dictionary(string)
 implicit none
 
-! ident_4="@(#) M_args prototype_to_dictionary(3f) parse user command and store tokens into dictionary"
+! ident_4="@(#)M_args::prototype_to_dictionary(3f): parse user command and store tokens into dictionary"
 
 character(len=*),intent(in)       :: string ! string is character input string of options and values
 
@@ -1187,7 +1182,7 @@ end function get
 !!##EXAMPLE
 !!
 !!   Sample program
-!!    program demo_prototype_and_cmd_args_to_nlist
+!!    program demo_M_list
 !!    use M_args,  only : prototype_and_cmd_args_to_nlist, unnamed, debug
 !!    implicit none
 !!    character(len=:),allocatable :: readme
@@ -1231,7 +1226,7 @@ end function get
 !!             write(*,'(i6.6,3a)')(i,'[',unnamed(i),']',i=1,size(unnamed))
 !!          endif
 !!       endif
-!!    end program demo_prototype_and_cmd_args_to_nlist
+!!    end program demo_M_list
 !!##AUTHOR
 !!    John S. Urban, 2019
 !!##LICENSE
@@ -1239,7 +1234,7 @@ end function get
 subroutine prototype_and_cmd_args_to_nlist(prototype,nml)
 implicit none
 
-! ident_5="@(#) M_args prototype_and_cmd_args_to_nlist create dictionary from prototype (if not null) and update from command line arguments"
+! ident_5="@(#)M_args::prototype_and_cmd_args_to_nlist: create dictionary from prototype (if not null) and update from command line arguments"
 
 character(len=*)             :: prototype
 character(len=:),allocatable :: nml
@@ -1460,7 +1455,7 @@ end subroutine dictionary_to_namelist
 !!
 !!    Typical usage:
 !!
-!!     program demo_print_dictionary
+!!     program demo_get_namelist
 !!     use M_args,  only : unnamed, get_namelist, print_dictionary
 !!     implicit none
 !!     integer                      :: i
@@ -1494,7 +1489,7 @@ end subroutine dictionary_to_namelist
 !!        write(*,'(a)')'files:'
 !!        write(*,'(i6.6,3a)')(i,'[',unnamed(i),']',i=1,size(unnamed))
 !!     endif
-!!     end program demo_print_dictionary
+!!     end program demo_get_namelist
 !!
 !!    Sample output
 !!
@@ -1629,7 +1624,7 @@ end function longest_command_argument
 subroutine namelist_to_dictionary(string)
 implicit none
 
-! ident_6="@(#) M_args namelist_to_dictionary(3f) parse user command and store tokens into dictionary"
+! ident_6="@(#)M_args::namelist_to_dictionary(3f): parse user command and store tokens into dictionary"
 
 character(len=*),intent(in)       :: string ! string is character input string of options and values
 
@@ -1760,7 +1755,7 @@ end subroutine namelist_to_dictionary
 !===================================================================================================================================
 pure function oneline(str) result (string)
 
-! ident_7="@(#) M_strings oneline(3f) append an array of character variables with space separator into a single CHARACTER variable"
+! ident_7="@(#)M_strings::oneline(3f): append an array of character variables with space separator into a single CHARACTER variable"
 
 character(len=*),intent(in)          :: str(:)
 character(len=:),allocatable         :: string
